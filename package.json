@@ -4,14 +4,23 @@
   "description": "todo using mongodb",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha server/test/*.test.js"
+
   },
   "author": "TheDude",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
+    "latest-version": "^3.1.0",
+    "mocha": "^3.4.2",
     "mongodb": "^2.2.29",
     "mongoose": "^4.10.8"
+  },
+  "devDependencies": {
+    "expect": "^1.20.2",
+    "mocha": "^3.4.2",
+    "nodemon": "^1.11.0",
+    "supertest": "^3.0.0"
   }
 }
