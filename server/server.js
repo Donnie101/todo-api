@@ -25,11 +25,13 @@ app.get('/todos',(req,res)=>{
 
   Todo.find({}).then((todos)=>{
     res.send(todos);
+    console.log(res);
   },function (err) {
     res.status(400);
   })
 
-})
+});
+
 
 app.listen(3000, () => {
   console.log('Started on port 3000');
