@@ -37,18 +37,19 @@ app.get('/todos/:id',(req,res)=>{
   var id = req.params.id;
 
   if(!ObjectID.isValid(id))
-    return res.sendStatus(404);
+    return res.send('ID NOT VALID')
 
   Todo.findById(id).then((todo)=>{
     if(!todo)
-      return res.sendStatus(400);
-    console.log(todo);
+      return res.send('TODO NOT FOUND');
+
+    res.send(todo)
   }).catch((e)=>{
-    res.sendStatus(400);
+    res.res.send('SOMETHING WENR WRONG');
   })
 })
 
-app.listen(3000, () => {
+app.listen(process.env.PORT || 3000, () => {
   console.log('Started on port 3000');
 });
 
