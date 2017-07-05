@@ -117,6 +117,41 @@ app.get('/users/me',authenticate,(req,res)=>{
 
 });
 
+app.post('/users/login',(req,res)=>{
+  var body = _.pick(req.body,['email','password']);
+
+  User.findByCredentials(body.email,body.password).then((user)=>{
+    return user.generateAuthToken().then((token)=>{
+      res.header('x-auth',token).send(user);
+    });
+  }).catch((err)=>{
+    res.sendStatus(400);
+  });
+
+
+
+
+// User.findOne({email:req.body.email},(err,user)=>{
+//
+  //   if(!user)
+  //     return res.status(400).send('USER NOT FOUND');
+  //
+  //   bcrypt.compare(req.body.password,user.password,(err,result)=>{
+  //     if(err){
+  //       return res.status(400).send('SOMETHING WENT WRONG')
+  //     }
+  //     else if(result){
+  //       return res.status(200).send(user);
+  //     }else{
+  //       return res.status(400).send('PASSWORD INCORRECT');
+  //     }
+  //   });
+  //
+  // }).catch((err)=>{
+  //   return res.status(400).send('SOMETHING WENT WRONG');
+  // })
+});
+
 app.listen(process.env.PORT || 3000, () => {
   console.log('Started on port 3000');
 });
