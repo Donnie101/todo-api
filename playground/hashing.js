@@ -1,15 +1,12 @@
-const {SHA256} = require('crypto-js');
-const jws = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
-var data={
-  id:10
-}
+var password = '123abc!';
 
-var token = jws.sign(data,'somesecret');
-console.log(token);
-
-var decoded = jws.verify(token,'somesecret');
-console.log('decoded: ',decoded);
+bcrypt.genSalt(10,(err,salt)=>{
+  bcrypt.hash(password,salt,(err,hash)=>{
+    console.log(hash);
+  })
+})
 
 
 
@@ -21,11 +18,18 @@ console.log('decoded: ',decoded);
 
 
 
-
-
-
-
-
+// const {SHA256} = require('crypto-js');
+// const jws = require('jsonwebtoken');
+//
+// var data={
+//   id:10
+// }
+//
+// var token = jws.sign(data,'somesecret');
+// console.log(token);
+//
+// var decoded = jws.verify(token,'somesecret');
+// console.log('decoded: ',decoded);
 // var message = 'this is a password';
 //
 // var hash = SHA256(message).toString();

@@ -2,11 +2,13 @@ require('./config/config');
 const express = require('express');
 const bodyParser = require('body-parser');
 const _ = require('lodash');
+const bcrypt = require('bcryptjs');
 
 var {mongoose} = require('./db/mongoose');
 var {ObjectID} = require('mongodb')
 var {User} = require('./models/user');
 var {Todo} = require('./models/todo');
+var {authenticate} = require('./middleware/authenticate')
 
 var app = express();
 
@@ -97,7 +99,6 @@ app.patch('/todos/:id',(req,res)=>{
 //AUTHENTICATION
 
 app.post('/users',(req,res)=>{
-
   var body = _.pick(req.body,['email','password'])
   var user = new User(body);
 
@@ -108,6 +109,12 @@ app.post('/users',(req,res)=>{
   }).catch((err)=>{
     res.status(400).send(err);
   })
+});
+
+
+app.get('/users/me',authenticate,(req,res)=>{
+  res.send(req.user);
+
 });
 
 app.listen(process.env.PORT || 3000, () => {
